@@ -117,6 +117,39 @@ app.post('/addFriend', (req, res) => {
 
 });
 
+app.post('/events', (req, res) => {
+    console.log("event inserted");
+
+    if (!req.body.name || !req.body.location || !req.body.time || !req.body.peopleInvited) {
+        res.status(400).send({ 'error': 'Preencha todos os campos obrigatorios' });
+        return;
+    }
+
+    event = {
+        name: req.body.name,
+        location: req.body.location,
+        time: req.body.time,
+        timeInterval: req.body.timeInterval,
+        fixedDate: req.body.fixedDate,
+        peopleInvited: req.body.peopleInvited,
+        peopleConfirmed: req.body.peopleConfirmed
+
+    }
+
+
+
+    req.db.collection('events')
+    .insert(user, (err, data) => {
+        if (!err) {
+            res.send(data);
+        } else {
+            res.send(err);
+        }
+    });
+
+
+});
+
 app.listen(3000, () => {
     console.log('Servidor local rodando na 3000');
 });
