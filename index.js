@@ -126,6 +126,7 @@ app.post('/events', (req, res) => {
     }
 
     event = {
+        creator = req.body.creator,
         name: req.body.name,
         location: req.body.location,
         timeStart: req.body.timeStart,
@@ -148,6 +149,15 @@ app.post('/events', (req, res) => {
     });
 
 
+});
+
+app.get('/events', (req, res) => {
+
+    req.db.collection('events')
+    .find({})
+    .toArray((err, data) => {
+        res.send(data);
+    });
 });
 
 app.listen(3000, () => {
