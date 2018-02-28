@@ -128,8 +128,8 @@ app.post('/events', (req, res) => {
     event = {
         name: req.body.name,
         location: req.body.location,
-        time: req.body.time,
-        timeInterval: req.body.timeInterval,
+        timeStart: req.body.timeStart,
+        timeEnd: req.body.timeEnd,
         fixedDate: req.body.fixedDate,
         peopleInvited: req.body.peopleInvited,
         peopleConfirmed: req.body.peopleConfirmed
