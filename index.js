@@ -139,7 +139,7 @@ app.post('/events', (req, res) => {
 
 
     req.db.collection('events')
-    .insert(user, (err, data) => {
+    .insert(event, (err, data) => {
         if (!err) {
             res.send(data);
         } else {
