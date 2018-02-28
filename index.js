@@ -103,14 +103,15 @@ app.post('/addFriend', (req, res) => {
     req.db.collection('users')
     .findOne(busca, (err, data) => {
 
-        
-        data.amigos.push(newFriend);
-        req.db.collection('users')
-        .update(busca, data,  (err, data) => {
-
+        let index = data.amigos.indexOf(newFriend);
+        if (index === -1) {
+            data.amigos.push(newFriend);
+            req.db.collection('users')
+            .update(busca, data,  (err, data) => {
 
         });
-
+        }
+        
         res.send(data);
     });
 
@@ -126,7 +127,7 @@ app.post('/events', (req, res) => {
     }
 
     event = {
-        creator = req.body.creator,
+        creator: req.body.creator,
         name: req.body.name,
         location: req.body.location,
         timeStart: req.body.timeStart,
@@ -159,6 +160,33 @@ app.get('/events', (req, res) => {
         res.send(data);
     });
 });
+
+app.post('/searchMeetings', (req, res) => {
+    console.log("searching meetings...");
+
+    if (!req.body.login) {
+        res.status(400).send({ 'error': 'Preencha todos os campos obrigatorios' });
+        return;
+    }
+
+    busca = {
+        login: req.body.login,
+    }
+
+
+
+    req.db.collection('events')
+    .find({"peopleInvited":  {login: req.body.login}}, (err, data) => {
+        if (!err) {
+            res.send(data);
+        } else {
+            res.send(err);
+        }
+    });
+
+
+});
+
 
 app.listen(3000, () => {
     console.log('Servidor local rodando na 3000');
