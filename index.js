@@ -161,22 +161,51 @@ app.get('/events', (req, res) => {
     });
 });
 
-app.post('/searchMeetings', (req, res) => {
+app.post('/searchMeetingsInvited', (req, res) => {
+    
     console.log("searching meetings...");
+
+    console.log('o body é:', req.body);
+
+    if (!req.body.login) {
+        res.status(400).send({ 'error': 'Preencha todos os campos obrigatorios' });
+        return;
+    }
+    busca = {
+        login: req.body.login
+    }
+    
+
+
+    console.log('testando LOGIN: ', busca);
+
+    req.db.collection('events')
+    .find( {"peopleInvited": busca}).toArray((err, data) => {
+        if (!err) {
+            res.send(data);
+        } else {
+            res.send(err);
+        }
+    });
+
+
+});
+
+app.post('/searchMeetingsCreated', (req, res) => {
+    
+    console.log("searching meetings...");
+
+    console.log('o body é:', req.body);
 
     if (!req.body.login) {
         res.status(400).send({ 'error': 'Preencha todos os campos obrigatorios' });
         return;
     }
 
-    busca = {
-        login: req.body.login
-    }
-
-
+    console.log('testando LOGIN: ', req.body.login);
 
     req.db.collection('events')
-    .find({"peopleInvited":  {login: req.body.login}}, (err, data) => {
+    .find( {"creator": req.body.login}).toArray((err, data) => {
         if (!err) {
             res.send(data);
         } else {
