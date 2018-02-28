@@ -120,7 +120,7 @@ app.post('/addFriend', (req, res) => {
 app.post('/events', (req, res) => {
     console.log("event inserted");
 
-    if (!req.body.name || !req.body.location || !req.body.time || !req.body.peopleInvited) {
+    if (!req.body.name || !req.body.location || !req.body.timeStart || !req.body.peopleInvited) {
         res.status(400).send({ 'error': 'Preencha todos os campos obrigatorios' });
         return;
     }
