@@ -170,7 +170,7 @@ app.post('/searchMeetings', (req, res) => {
     }
 
     busca = {
-        login: req.body.login,
+        login: req.body.login
     }
 
 
@@ -189,6 +189,6 @@ app.post('/searchMeetings', (req, res) => {
 
 
 app.listen(3000, () => {
-    console.log('Servidor local rodando na 3000');
+    console.log('Servidor digital ocean rodando na 3000');
 });
 
